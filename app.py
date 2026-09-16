@@ -1,40 +1,99 @@
 import os
-
 from flask import Flask, render_template, request, jsonify
 from openai import OpenAI
 
-
 app = Flask(__name__)
 
-
-api_key = os.environ.get("OPENAI_API_KEY")
-
 client = OpenAI(
-    api_key=api_key
+    api_key=os.environ.get("OPENAI_API_KEY")
 )
 
-
-SYSTEM_MESSAGE = """
+SYSTEM_PROMPT = """
 너의 이름은 챗미나이야.
-
-사용자와 자연스럽게 대화하는 AI assistant야.
-
-다음 규칙을 지켜.
-
-1. 사용자의 질문을 정확하게 이해해.
-2. 질문의 주제에 맞게 답해.
-3. 한국어 질문에는 자연스러운 한국어로 답해.
-4. 영어 질문에는 영어로 답해.
-5. 수학, 과학, 역사, 코딩, 글쓰기 등 다양한 주제에 답해.
-6. 이전 대화 내용을 참고해서 대화의 흐름을 유지해.
-7. 모르는 내용은 거짓으로 만들어내지 말고 모른다고 말해.
-8. 필요한 경우 예시와 단계별 설명을 사용해.
-9. 사용자가 짧게 질문하면 너무 길게 답하지 않아.
-10. 이모지와 이모티콘은 사용하지 않아.
-11. 친절하고 이해하기 쉽게 답해.
+사용자와 자연스럽게 대화하는 AI야.
+한국어 질문에는 한국어로 답해.
+영어 질문에는 영어로 답해.
+수학, 과학, 역사, 코딩, 글쓰기 등 다양한 질문에 답해.
+이전 대화의 내용을 참고해서 대화의 흐름을 유지해.
+모르는 내용은 아는 척하지 마.
+이모지와 이모티콘은 사용하지 마.
+쉽고 정확하게 설명해.
 """
 
+@app.route("/")
+def home():
+    return render_template("index.html")
 
+
+@app.route("/chat", methods=["POST"])
+def chat():
+
+    data = request.get_json()
+
+    message = data.get("message", "")
+    history = data.get("history", [])
+
+    if not message:
+        return jsonify({
+            "answer": "질문을 입력해주세요."
+        })
+
+    try:
+
+        input_messages = []
+
+        for item in history:
+
+            if item.get("role") == "user":
+                input_messages.append({
+                    "role": "user",
+                    "content": item.get("content", "")
+                })
+
+            elif item.get("role") == "assistant":
+                input_messages.append({
+                    "role": "assistant",
+                    "content": item.get("content", "")
+                })
+
+        input_messages.append({
+            "role": "user",
+            "content": message
+        })
+
+        response = client.responses.create(
+            model="gpt-5.6-luna",
+            instructions=SYSTEM_PROMPT,
+            input=input_messages
+        )
+
+        return jsonify({
+            "answer": response.output_text
+        })
+
+    except Exception as error:
+
+        print(error)
+
+        return jsonify({
+            "answer": "AI 연결에 문제가 발생했습니다."
+        })
+
+
+@app.route("/health")
+def health():
+
+    return "ChatMinAI is running"
+
+
+if __name__ == "__main__":
+
+    port = int(os.environ.get("PORT", "5000"))
+
+    app.run(
+        host="0.0.0.0",
+        port=port
+    )
 @app.route("/")
 def index():
     return render_template("index.html")
