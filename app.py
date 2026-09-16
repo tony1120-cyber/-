@@ -106,6 +106,78 @@ if __name__ == "__main__":
     app.run(
         host="0.0.0.0",
         port=int(os.environ.get("PORT", 5000))
+    )
+@app.route("/chat", methods=["POST"])
+def chat():
+
+    data = request.get_json()
+
+    message = data.get("message", "").strip()
+    conversation_id = data.get("conversation_id", "default")
+
+    if not message:
+        return jsonify({
+            "answer": "질문을 입력해주세요."
+        })
+
+    # 해당 사용자의 대화 기록이 없으면 생성
+    if conversation_id not in conversations:
+        conversations[conversation_id] = []
+
+    # 사용자 메시지 저장
+    conversations[conversation_id].append({
+        "role": "user",
+        "content": message
+    })
+
+    try:
+
+        response = client.responses.create(
+            model="gpt-5.6-luna",
+
+            instructions=SYSTEM_PROMPT,
+
+            input=conversations[conversation_id]
+        )
+
+        answer = response.output_text
+
+        # AI 답변 저장
+        conversations[conversation_id].append({
+            "role": "assistant",
+            "content": answer
+        })
+
+        return jsonify({
+            "answer": answer
+        })
+
+    except Exception as e:
+
+        print("ERROR:", e)
+
+        return jsonify({
+            "answer": "AI와 연결하는 과정에서 문제가 발생했습니다."
+        }), 500
+
+
+@app.route("/clear", methods=["POST"])
+def clear():
+
+    data = request.get_json()
+    conversation_id = data.get("conversation_id", "default")
+
+    conversations.pop(conversation_id, None)
+
+    return jsonify({
+        "success": True
+    })
+
+
+if __name__ == "__main__":
+    app.run(
+        host="0.0.0.0",
+        port=int(os.environ.get("PORT", 5000))
     )            ]
         )
 
