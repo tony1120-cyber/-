@@ -1,312 +1,404 @@
 <!DOCTYPE html>
+
 <html lang="ko">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>챗미나이</title>
+<meta charset="UTF-8">
 
-    <style>
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
-        * {
-            box-sizing: border-box;
-        }
+<title>챗미나이</title>
 
-        body {
-            margin: 0;
-            background: #212121;
-            color: #ffffff;
-            font-family: Arial, sans-serif;
-        }
 
-        header {
-            height: 60px;
-            border-bottom: 1px solid #3a3a3a;
+<style>
 
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+* {
+    box-sizing: border-box;
+}
 
-            padding: 0 20px;
 
-            font-size: 20px;
-            font-weight: bold;
-        }
+body {
 
-        .new-chat {
-            background: transparent;
-            color: #cccccc;
+    margin: 0;
 
-            border: 1px solid #555;
+    background: #212121;
 
-            border-radius: 8px;
+    color: white;
 
-            padding: 8px 12px;
+    font-family:
+        Arial,
+        "Noto Sans KR",
+        sans-serif;
 
-            cursor: pointer;
-        }
+}
 
-        .new-chat:hover {
-            background: #333333;
-        }
 
-        #chat {
-            max-width: 850px;
+header {
 
-            margin: auto;
+    height: 60px;
 
-            padding: 30px 20px 130px;
-        }
+    border-bottom:
+        1px solid #3a3a3a;
 
-        .message {
-            padding: 15px 18px;
+    display: flex;
 
-            margin: 15px 0;
+    align-items: center;
 
-            border-radius: 12px;
+    justify-content: space-between;
 
-            line-height: 1.7;
+    padding:
+        0 20px;
 
-            white-space: pre-wrap;
-            overflow-wrap: break-word;
-        }
+}
 
-        .user {
-            background: #343541;
-        }
 
-        .assistant {
-            background: #292929;
-        }
+.logo {
 
-        .input-area {
-            position: fixed;
+    font-size: 20px;
 
-            bottom: 20px;
+    font-weight: bold;
 
-            left: 50%;
+}
 
-            transform: translateX(-50%);
 
-            width: min(850px, calc(100% - 30px));
+.new-chat {
 
-            display: flex;
+    background: transparent;
 
-            gap: 10px;
-        }
+    color: #cccccc;
 
-        #message {
-            flex: 1;
+    border:
+        1px solid #555555;
 
-            padding: 16px;
+    border-radius: 8px;
 
-            background: #303030;
+    padding:
+        8px 13px;
 
-            color: white;
+    cursor: pointer;
 
-            border: 1px solid #555;
+}
 
-            border-radius: 12px;
 
-            outline: none;
+.new-chat:hover {
 
-            font-size: 16px;
-        }
+    background: #333333;
 
-        #send {
-            padding: 0 22px;
+}
 
-            background: #10a37f;
 
-            color: white;
+#chat {
 
-            border: none;
+    max-width: 850px;
 
-            border-radius: 12px;
+    margin: 0 auto;
 
-            cursor: pointer;
+    padding:
+        25px 20px 130px;
 
-            font-size: 16px;
-        }
+}
 
-        #send:hover {
-            background: #0d8f70;
-        }
 
-    </style>
+.message {
+
+    margin:
+        15px 0;
+
+    padding:
+        15px 18px;
+
+    border-radius:
+        12px;
+
+    line-height:
+        1.7;
+
+    white-space:
+        pre-wrap;
+
+    overflow-wrap:
+        break-word;
+
+}
+
+
+.user {
+
+    background:
+        #343541;
+
+}
+
+
+.assistant {
+
+    background:
+        #292929;
+
+}
+
+
+.input-area {
+
+    position: fixed;
+
+    bottom: 20px;
+
+    left: 50%;
+
+    transform:
+        translateX(-50%);
+
+    width:
+        min(
+            850px,
+            calc(100% - 30px)
+        );
+
+    display: flex;
+
+    gap: 10px;
+
+}
+
+
+#message {
+
+    flex: 1;
+
+    min-width: 0;
+
+    padding:
+        15px;
+
+    border:
+        1px solid #555555;
+
+    border-radius:
+        12px;
+
+    background:
+        #303030;
+
+    color: white;
+
+    outline: none;
+
+    font-size: 16px;
+
+}
+
+
+#send {
+
+    padding:
+        0 20px;
+
+    border: none;
+
+    border-radius:
+        12px;
+
+    background:
+        #10a37f;
+
+    color: white;
+
+    cursor: pointer;
+
+    font-size: 16px;
+
+}
+
+
+#send:hover {
+
+    background:
+        #0d8f70;
+
+}
+
+
+#send:disabled {
+
+    opacity:
+        0.5;
+
+    cursor:
+        not-allowed;
+
+}
+
+
+@media (max-width: 600px) {
+
+    header {
+
+        padding:
+            0 15px;
+
+    }
+
+
+    #chat {
+
+        padding:
+            20px 12px 120px;
+
+    }
+
+
+    .input-area {
+
+        bottom:
+            10px;
+
+        width:
+            calc(100% - 20px);
+
+    }
+
+
+    #send {
+
+        padding:
+            0 15px;
+
+    }
+
+}
+
+</style>
 
 </head>
 
+
 <body>
+
 
 <header>
 
-    <div>챗미나이</div>
+<div class="logo">
+    챗미나이
+</div>
 
-    <button class="new-chat" onclick="newChat()">
-        새 대화
-    </button>
+
+<button
+    class="new-chat"
+    onclick="newChat()">
+
+    새 대화
+
+</button>
 
 </header>
 
 
+
 <div id="chat">
 
-    <div class="message assistant">
-        안녕하세요. 챗미나이입니다. 무엇을 도와드릴까요?
-    </div>
+<div class="message assistant">
+
+안녕하세요. 챗미나이입니다.
+무엇을 도와드릴까요?
 
 </div>
+
+</div>
+
 
 
 <div class="input-area">
 
-    <input
-        id="message"
-        type="text"
-        placeholder="메시지를 입력하세요..."
-        autocomplete="off"
-    >
 
-    <button id="send" onclick="sendMessage()">
-        전송
-    </button>
+<input
+
+    id="message"
+
+    type="text"
+
+    placeholder="메시지를 입력하세요..."
+
+    autocomplete="off"
+
+
+>
+
+
+<button
+
+    id="send"
+
+    onclick="sendMessage()"
+
+>
+
+전송
+
+</button>
+
 
 </div>
 
 
+
 <script>
 
-const chat = document.getElementById("chat");
 
-const input = document.getElementById("message");
-
-const sendButton = document.getElementById("send");
+const chat =
+    document.getElementById("chat");
 
 
-let conversationId =
-    localStorage.getItem("chatminai_conversation_id");
+const input =
+    document.getElementById("message");
 
 
-if (!conversationId) {
-
-    conversationId =
-        crypto.randomUUID();
-
-    localStorage.setItem(
-        "chatminai_conversation_id",
-        conversationId
-    );
-
-}
+const send =
+    document.getElementById("send");
 
 
-input.addEventListener("keydown", function(event) {
+let history = [];
 
-    if (event.key === "Enter") {
 
-        if (!event.shiftKey) {
 
-            event.preventDefault();
+input.addEventListener(
+    "keydown",
+    function(event) {
 
-            sendMessage();
+        if (
+            event.key === "Enter"
+        ) {
+
+            if (
+                !event.shiftKey
+            ) {
+
+                event.preventDefault();
+
+                sendMessage();
+
+            }
 
         }
 
     }
-
-});
-
-
-async function sendMessage() {
-
-    const message =
-        input.value.trim();
+);
 
 
-    if (!message) {
-        return;
-    }
 
-
-    addMessage(
-        message,
-        "user"
-    );
-
-
-    input.value = "";
-
-    sendButton.disabled = true;
-
-
-    const loading =
-        addMessage(
-            "생각하는 중...",
-            "assistant"
-        );
-
-
-    try {
-
-        const response =
-            await fetch("/chat", {
-
-                method: "POST",
-
-                headers: {
-                    "Content-Type": "application/json"
-                },
-
-                body: JSON.stringify({
-
-                    message: message,
-
-                    conversation_id:
-                        conversationId
-
-                })
-
-            });
-
-
-        const data =
-            await response.json();
-
-
-        loading.textContent =
-            data.answer;
-
-
-    } catch (error) {
-
-        loading.textContent =
-            "서버와 연결할 수 없습니다.";
-
-    }
-
-
-    sendButton.disabled = false;
-
-    input.focus();
-
-    window.scrollTo(
-        0,
-        document.body.scrollHeight
-    );
-
-}
-
-
-function addMessage(text, type) {
+function addMessage(
+    text,
+    role
+) {
 
     const div =
         document.createElement("div");
 
 
     div.className =
-        "message " + type;
+        "message " + role;
 
 
     div.textContent =
@@ -327,251 +419,18 @@ function addMessage(text, type) {
 }
 
 
-async function newChat() {
-
-    try {
-
-        await fetch("/clear", {
-
-            method: "POST",
-
-            headers: {
-                "Content-Type": "application/json"
-            },
-
-            body: JSON.stringify({
-
-                conversation_id:
-                    conversationId
-
-            })
-
-        });
-
-    } catch (error) {
-
-    }
-
-
-    conversationId =
-        crypto.randomUUID();
-
-
-    localStorage.setItem(
-        "chatminai_conversation_id",
-        conversationId
-    );
-
-
-    chat.innerHTML = `
-
-        <div class="message assistant">
-            새로운 대화를 시작했습니다.
-        </div>
-
-    `;
-
-    input.focus();
-
-}
-
-</script>
-
-</body>
-
-</html>        .new-chat {
-            background: transparent;
-            color: #cccccc;
-
-            border: 1px solid #555;
-
-            border-radius: 8px;
-
-            padding: 8px 12px;
-
-            cursor: pointer;
-        }
-
-        .new-chat:hover {
-            background: #333333;
-        }
-
-        #chat {
-            max-width: 850px;
-
-            margin: auto;
-
-            padding: 30px 20px 130px;
-        }
-
-        .message {
-            padding: 15px 18px;
-
-            margin: 15px 0;
-
-            border-radius: 12px;
-
-            line-height: 1.7;
-
-            white-space: pre-wrap;
-            overflow-wrap: break-word;
-        }
-
-        .user {
-            background: #343541;
-        }
-
-        .assistant {
-            background: #292929;
-        }
-
-        .input-area {
-            position: fixed;
-
-            bottom: 20px;
-
-            left: 50%;
-
-            transform: translateX(-50%);
-
-            width: min(850px, calc(100% - 30px));
-
-            display: flex;
-
-            gap: 10px;
-        }
-
-        #message {
-            flex: 1;
-
-            padding: 16px;
-
-            background: #303030;
-
-            color: white;
-
-            border: 1px solid #555;
-
-            border-radius: 12px;
-
-            outline: none;
-
-            font-size: 16px;
-        }
-
-        #send {
-            padding: 0 22px;
-
-            background: #10a37f;
-
-            color: white;
-
-            border: none;
-
-            border-radius: 12px;
-
-            cursor: pointer;
-
-            font-size: 16px;
-        }
-
-        #send:hover {
-            background: #0d8f70;
-        }
-
-    </style>
-
-</head>
-
-<body>
-
-<header>
-
-    <div>챗미나이</div>
-
-    <button class="new-chat" onclick="newChat()">
-        새 대화
-    </button>
-
-</header>
-
-
-<div id="chat">
-
-    <div class="message assistant">
-        안녕하세요. 챗미나이입니다. 무엇을 도와드릴까요?
-    </div>
-
-</div>
-
-
-<div class="input-area">
-
-    <input
-        id="message"
-        type="text"
-        placeholder="메시지를 입력하세요..."
-        autocomplete="off"
-    >
-
-    <button id="send" onclick="sendMessage()">
-        전송
-    </button>
-
-</div>
-
-
-<script>
-
-const chat = document.getElementById("chat");
-
-const input = document.getElementById("message");
-
-const sendButton = document.getElementById("send");
-
-
-let conversationId =
-    localStorage.getItem("chatminai_conversation_id");
-
-
-if (!conversationId) {
-
-    conversationId =
-        crypto.randomUUID();
-
-    localStorage.setItem(
-        "chatminai_conversation_id",
-        conversationId
-    );
-
-}
-
-
-input.addEventListener("keydown", function(event) {
-
-    if (event.key === "Enter") {
-
-        if (!event.shiftKey) {
-
-            event.preventDefault();
-
-            sendMessage();
-
-        }
-
-    }
-
-});
-
 
 async function sendMessage() {
+
 
     const message =
         input.value.trim();
 
 
     if (!message) {
+
         return;
+
     }
 
 
@@ -583,7 +442,8 @@ async function sendMessage() {
 
     input.value = "";
 
-    sendButton.disabled = true;
+
+    send.disabled = true;
 
 
     const loading =
@@ -595,25 +455,35 @@ async function sendMessage() {
 
     try {
 
+
         const response =
-            await fetch("/chat", {
+            await fetch(
+                "/chat",
+                {
 
-                method: "POST",
+                    method:
+                        "POST",
 
-                headers: {
-                    "Content-Type": "application/json"
-                },
+                    headers: {
 
-                body: JSON.stringify({
+                        "Content-Type":
+                            "application/json"
 
-                    message: message,
+                    },
 
-                    conversation_id:
-                        conversationId
+                    body:
+                        JSON.stringify({
 
-                })
+                            message:
+                                message,
 
-            });
+                            history:
+                                history
+
+                        })
+
+                }
+            );
 
 
         const data =
@@ -624,698 +494,77 @@ async function sendMessage() {
             data.answer;
 
 
-    } catch (error) {
+        history.push({
+
+            role:
+                "user",
+
+            content:
+                message
+
+        });
+
+
+        history.push({
+
+            role:
+                "assistant",
+
+            content:
+                data.answer
+
+        });
+
+
+    }
+
+    catch (error) {
+
 
         loading.textContent =
             "서버와 연결할 수 없습니다.";
 
+
+        console.error(error);
+
     }
 
 
-    sendButton.disabled = false;
+    send.disabled = false;
+
 
     input.focus();
 
-    window.scrollTo(
-        0,
-        document.body.scrollHeight
-    );
 
 }
 
-
-function addMessage(text, type) {
-
-    const div =
-        document.createElement("div");
-
-
-    div.className =
-        "message " + type;
-
-
-    div.textContent =
-        text;
-
-
-    chat.appendChild(div);
-
-
-    window.scrollTo(
-        0,
-        document.body.scrollHeight
-    );
-
-
-    return div;
-
-}
 
 
 async function newChat() {
 
-    try {
 
-        await fetch("/clear", {
-
-            method: "POST",
-
-            headers: {
-                "Content-Type": "application/json"
-            },
-
-            body: JSON.stringify({
-
-                conversation_id:
-                    conversationId
-
-            })
-
-        });
-
-    } catch (error) {
-
-    }
-
-
-    conversationId =
-        crypto.randomUUID();
-
-
-    localStorage.setItem(
-        "chatminai_conversation_id",
-        conversationId
-    );
+    history = [];
 
 
     chat.innerHTML = `
 
         <div class="message assistant">
-            새로운 대화를 시작했습니다.
+
+        새로운 대화를 시작했습니다.
+
         </div>
 
     `;
+
 
     input.focus();
 
 }
 
-</script>
-
-</body>
-
-</html>        .new-chat {
-            background: transparent;
-            color: #cccccc;
-
-            border: 1px solid #555;
-
-            border-radius: 8px;
-
-            padding: 8px 12px;
-
-            cursor: pointer;
-        }
-
-        .new-chat:hover {
-            background: #333333;
-        }
-
-        #chat {
-            max-width: 850px;
-
-            margin: auto;
-
-            padding: 30px 20px 130px;
-        }
-
-        .message {
-            padding: 15px 18px;
-
-            margin: 15px 0;
-
-            border-radius: 12px;
-
-            line-height: 1.7;
-
-            white-space: pre-wrap;
-            overflow-wrap: break-word;
-        }
-
-        .user {
-            background: #343541;
-        }
-
-        .assistant {
-            background: #292929;
-        }
-
-        .input-area {
-            position: fixed;
-
-            bottom: 20px;
-
-            left: 50%;
-
-            transform: translateX(-50%);
-
-            width: min(850px, calc(100% - 30px));
-
-            display: flex;
-
-            gap: 10px;
-        }
-
-        #message {
-            flex: 1;
-
-            padding: 16px;
-
-            background: #303030;
-
-            color: white;
-
-            border: 1px solid #555;
-
-            border-radius: 12px;
-
-            outline: none;
-
-            font-size: 16px;
-        }
-
-        #send {
-            padding: 0 22px;
-
-            background: #10a37f;
-
-            color: white;
-
-            border: none;
-
-            border-radius: 12px;
-
-            cursor: pointer;
-
-            font-size: 16px;
-        }
-
-        #send:hover {
-            background: #0d8f70;
-        }
-
-    </style>
-
-</head>
-
-<body>
-
-<header>
-
-    <div>챗미나이</div>
-
-    <button class="new-chat" onclick="newChat()">
-        새 대화
-    </button>
-
-</header>
-
-
-<div id="chat">
-
-    <div class="message assistant">
-        안녕하세요. 챗미나이입니다. 무엇을 도와드릴까요?
-    </div>
-
-</div>
-
-
-<div class="input-area">
-
-    <input
-        id="message"
-        type="text"
-        placeholder="메시지를 입력하세요..."
-        autocomplete="off"
-    >
-
-    <button id="send" onclick="sendMessage()">
-        전송
-    </button>
-
-</div>
-
-
-<script>
-
-const chat = document.getElementById("chat");
-
-const input = document.getElementById("message");
-
-const sendButton = document.getElementById("send");
-
-
-let conversationId =
-    localStorage.getItem("chatminai_conversation_id");
-
-
-if (!conversationId) {
-
-    conversationId =
-        crypto.randomUUID();
-
-    localStorage.setItem(
-        "chatminai_conversation_id",
-        conversationId
-    );
-
-}
-
-
-input.addEventListener("keydown", function(event) {
-
-    if (event.key === "Enter") {
-
-        if (!event.shiftKey) {
-
-            event.preventDefault();
-
-            sendMessage();
-
-        }
-
-    }
-
-});
-
-
-async function sendMessage() {
-
-    const message =
-        input.value.trim();
-
-
-    if (!message) {
-        return;
-    }
-
-
-    addMessage(
-        message,
-        "user"
-    );
-
-
-    input.value = "";
-
-    sendButton.disabled = true;
-
-
-    const loading =
-        addMessage(
-            "생각하는 중...",
-            "assistant"
-        );
-
-
-    try {
-
-        const response =
-            await fetch("/chat", {
-
-                method: "POST",
-
-                headers: {
-                    "Content-Type": "application/json"
-                },
-
-                body: JSON.stringify({
-
-                    message: message,
-
-                    conversation_id:
-                        conversationId
-
-                })
-
-            });
-
-
-        const data =
-            await response.json();
-
-
-        loading.textContent =
-            data.answer;
-
-
-    } catch (error) {
-
-        loading.textContent =
-            "서버와 연결할 수 없습니다.";
-
-    }
-
-
-    sendButton.disabled = false;
-
-    input.focus();
-
-    window.scrollTo(
-        0,
-        document.body.scrollHeight
-    );
-
-}
-
-
-function addMessage(text, type) {
-
-    const div =
-        document.createElement("div");
-
-
-    div.className =
-        "message " + type;
-
-
-    div.textContent =
-        text;
-
-
-    chat.appendChild(div);
-
-
-    window.scrollTo(
-        0,
-        document.body.scrollHeight
-    );
-
-
-    return div;
-
-}
-
-
-async function newChat() {
-
-    try {
-
-        await fetch("/clear", {
-
-            method: "POST",
-
-            headers: {
-                "Content-Type": "application/json"
-            },
-
-            body: JSON.stringify({
-
-                conversation_id:
-                    conversationId
-
-            })
-
-        });
-
-    } catch (error) {
-
-    }
-
-
-    conversationId =
-        crypto.randomUUID();
-
-
-    localStorage.setItem(
-        "chatminai_conversation_id",
-        conversationId
-    );
-
-
-    chat.innerHTML = `
-
-        <div class="message assistant">
-            새로운 대화를 시작했습니다.
-        </div>
-
-    `;
-
-    input.focus();
-
-}
 
 </script>
 
-</body>
-
-</html>            padding: 15px 18px;
-            margin: 15px 0;
-            border-radius: 12px;
-            white-space: pre-wrap;
-            line-height: 1.6;
-        }
-
-        .user {
-            background: #343541;
-        }
-
-        .ai {
-            background: #292929;
-        }
-
-        .input-box {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: min(850px, calc(100% - 30px));
-            display: flex;
-            gap: 10px;
-        }
-
-        input {
-            flex: 1;
-            padding: 16px;
-            border-radius: 12px;
-            border: 1px solid #555;
-            background: #303030;
-            color: white;
-            font-size: 16px;
-            outline: none;
-        }
-
-        button {
-            border: 0;
-            border-radius: 12px;
-            padding: 0 22px;
-            background: #10a37f;
-            color: white;
-            font-size: 16px;
-            cursor: pointer;
-        }
-
-        button:hover {
-            opacity: 0.85;
-        }
-    </style>
-</head>
-
-<body>
-
-<header>
-    🤖 챗미나이
-</header>
-
-<div id="chat">
-    <div class="message ai">
-        안녕하세요! 저는 챗미나이입니다. 무엇을 도와드릴까요?
-    </div>
-</div>
-
-<div class="input-box">
-    <input
-        id="message"
-        placeholder="챗미나이에게 메시지를 입력하세요..."
-        autocomplete="off"
-    >
-
-    <button onclick="sendMessage()">전송</button>
-</div>
-
-<script>
-const input = document.getElementById("message");
-const chat = document.getElementById("chat");
-
-input.addEventListener("keydown", function(event) {
-    if (event.key === "Enter") {
-        sendMessage();
-    }
-});
-
-async function sendMessage() {
-
-    const message = input.value.trim();
-
-    if (!message) return;
-
-    chat.innerHTML += `
-        <div class="message user">${escapeHtml(message)}</div>
-    `;
-
-    input.value = "";
-
-    const loading = document.createElement("div");
-    loading.className = "message ai";
-    loading.textContent = "생각하는 중...";
-    chat.appendChild(loading);
-
-    try {
-
-        const response = await fetch("/chat", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                message: message
-            })
-        });
-
-        const data = await response.json();
-
-        loading.textContent = data.answer;
-
-    } catch (error) {
-
-        loading.textContent = "서버와 연결할 수 없습니다.";
-
-    }
-
-    window.scrollTo(0, document.body.scrollHeight);
-}
-
-function escapeHtml(text) {
-    const div = document.createElement("div");
-    div.textContent = text;
-    return div.innerHTML;
-}
-</script>
 
 </body>
-</html>            margin: 20px 0;
-            padding: 15px 18px;
-            border-radius: 12px;
-            line-height: 1.6;
-        }
 
-        .user {
-            background: #343541;
-        }
-
-        .ai {
-            background: #2b2b2b;
-        }
-
-        .input-area {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: min(800px, calc(100% - 30px));
-            display: flex;
-            gap: 10px;
-        }
-
-        input {
-            flex: 1;
-            padding: 15px;
-            border: 1px solid #555;
-            border-radius: 12px;
-            background: #2f2f2f;
-            color: white;
-            font-size: 16px;
-            outline: none;
-        }
-
-        button {
-            padding: 0 20px;
-            border: none;
-            border-radius: 12px;
-            background: #10a37f;
-            color: white;
-            font-size: 16px;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background: #0d8f70;
-        }
-    </style>
-</head>
-
-<body>
-
-    <div class="header">
-        🤖 챗미나이
-    </div>
-
-    <div class="chat" id="chat">
-        <div class="message ai">
-            안녕하세요! 저는 챗미나이입니다. 무엇을 도와드릴까요?
-        </div>
-    </div>
-
-    <div class="input-area">
-        <input
-            id="message"
-            type="text"
-            placeholder="챗미나이에게 메시지를 입력하세요..."
-            onkeydown="if(event.key === 'Enter') sendMessage()"
-        >
-
-        <button onclick="sendMessage()">전송</button>
-    </div>
-
-    <script>
-        async function sendMessage() {
-
-            const input = document.getElementById("message");
-            const chat = document.getElementById("chat");
-
-            const message = input.value.trim();
-
-            if (!message) return;
-
-            chat.innerHTML += `
-                <div class="message user">
-                    ${message}
-                </div>
-            `;
-
-            input.value = "";
-
-            const response = await fetch("/chat", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    message: message
-                })
-            });
-
-            const data = await response.json();
-
-            chat.innerHTML += `
-                <div class="message ai">
-                    ${data.answer}
-                </div>
-            `;
-
-            window.scrollTo(0, document.body.scrollHeight);
-        }
-    </script>
-
-</body>
 </html>
